@@ -6,20 +6,20 @@ import './style.css';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {value: '',nameError:''    };
+    this.state = {value: '',error:'' ,email:''   };
     this.handleChange=this.handleChange.bind(this);
     this.handleSubmit=this.handleSubmit.bind(this);
   }
 handleChange(event)
   {
-    this.setState({value:event.target.value});
+    this.setState({[event.target.name]:event.target.value});
   }
   handleSubmit(event)
   {
     const valid=this.validate();
     if(valid){
        alert('Name is' + this.state.value);
-        this.setState({nameError:''});
+        this.setState({error:''});
     }
         event.preventDefault();   
   }
@@ -28,16 +28,16 @@ handleChange(event)
     let error="";
     if(!this.state.value)
     {
-      error +="Name cannot be blank<br></br>";
+      error +="Name cannot be blank.";
     }
-    if(isValidateEmail(this.email.value))
+    if(this.isValidateEmail(this.state.email))
     {
-      error="Invalid email id";
+      error +="Invalid email id";
     }
     // if error is obtained store in the setState
-    if(nameError)
+    if(error)
     {
-      this.setState({nameError});
+      this.setState({error});
        return false;
     }
    return true;
@@ -55,8 +55,8 @@ handleChange(event)
       <div>
        <form onSubmit={this.handleSubmit}>
         Name <input type="text" value={this.state.value} onChange={this.handleChange} /> <br></br>
-        email <input type="text" value={this.state.value} onChange={this.handleChange} /><br></br>
-         {this.state.nameError}<br></br>
+        email <input type="text" value={this.state.email} onChange={this.handleChange} /><br></br>
+         {this.state.error}<br></br>
         <input type="submit" />
        </form>
       </div>
